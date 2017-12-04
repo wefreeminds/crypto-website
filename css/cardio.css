@@ -1111,6 +1111,18 @@ footer .social-footer li:hover a {
 }
 
 
-
+#catfish {
+	position:fixed;
+	bottom:0;
+	background:black;
+	padding:0;
+	height: 79px;  /* includes transparent part */
+	cursor: pointer;
+	margin: 0; 
+	width:100%;
+}
+html {
+	padding:0 0 58px 0; /* 58px = height of the opaque part of the Catfish */
+}
 
 
