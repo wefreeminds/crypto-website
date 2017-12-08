@@ -1055,6 +1055,11 @@ footer .social-footer li:hover a {
 }
 
 /* Media Queries */
+@media(max-width:1500px) {
+	.crypto-prices {
+		display: none;
+	}
+}
 
 @media(max-width:991px) {
 	.text-center-mobile {
@@ -1126,3 +1131,22 @@ html {
 }
 
 
+.crypto-prices {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-left: 60px;
+	font-family: monospace;
+	font-weight: bold;
+	color: white;
+	font-size: 130%;
+	transition: opacity 0.3s ease-out;
+}
+
+.navbar-fixed-top .crypto-prices {
+	color: inherit;
+}
+
+.crypto-prices.fadeout {
+	opacity: 0;
+}
