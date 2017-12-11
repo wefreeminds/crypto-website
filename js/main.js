@@ -168,4 +168,83 @@ jQuery(function($) {
 	$(window).on("resize", function() {
 		$('.modal:visible').each(centerModal);
 	});
+
+	const currencies = [
+		{
+			name: 'Bitcoin',
+			symbol: 'BTC',
+		},
+		{
+			name: 'Ethereum',
+			symbol: 'ETH',
+		},
+		{
+			name: 'Monero',
+			symbol: 'XMR',
+		},
+		{
+			name: 'Litecoin',
+			symbol: 'LTC',
+		},
+		{
+			name: 'Dash',
+			symbol: 'DASH',
+		},
+		{
+			name: 'ZCash',
+			symbol: 'ZEC',
+		},
+		{
+			name: 'Bitcoin Cash',
+			symbol: 'BCH',
+		},
+		{
+			name: 'Dogecoin',
+			symbol: 'DOGE',
+		},
+		{
+			name: 'Ripple',
+			symbol: 'XRP',
+		},
+		{
+			name: 'Stellar',
+			symbol: 'XLM',
+		},
+	],
+		timeout = 3800,
+		priceElement = document.querySelector('.crypto-prices'),
+		animDelay = 300;
+
+	let prices = null;
+	function updatePrices() {
+		fetch('https://min-api.cryptocompare.com/data/pricemulti?fsyms=' + (currencies.map(c => c.symbol).join(',')) + '&tsyms=USD,BTC')
+			.then(r => r.json())
+			.then(j => prices = j);
+		setTimeout(updatePrices, 30000);
+	}
+	updatePrices();
+	function displayPrice(coin, price) {
+		displayText(`${coin.symbol}: $${price.USD}`);
+	}
+	function displayText (text) {
+		$('.crypto-prices').addClass('fadeout');
+		setTimeout(() => {
+			$('.crypto-prices').text(text);
+			$('.crypto-prices').removeClass('fadeout');
+		}, animDelay * 1.25);
+	}
+	let lastCoin = '';
+	setInterval(() => {
+		let coin;
+		do {
+			coin = currencies[Math.floor(Math.random() * currencies.length)];
+		} while (coin.name === lastCoin);
+		
+		lastCoin = coin.name;
+
+		if (prices != null) {
+			displayPrice(coin, prices[coin.symbol]);
+		}
+	}, timeout);
+
 });
